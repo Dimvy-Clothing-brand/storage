@@ -29,17 +29,22 @@ export interface CommonCreateBlobOptions extends BlobCommandOptions {
   access: 'public';
   /**
    * Adds a random suffix to the filename.
-   * @defaultvalue true
+   * @defaultvalue false
    */
   addRandomSuffix?: boolean;
+  /**
+   * Allow overwriting an existing blob. By default this is set to false and will throw an error if the blob already exists.
+   * @defaultvalue false
+   */
+  allowOverwrite?: boolean;
   /**
    * Defines the content type of the blob. By default, this value is inferred from the pathname. Sent as the 'content-type' header when downloading a blob.
    */
   contentType?: string;
   /**
-   * Number in seconds to configure the edge and browser cache. The maximum values are 5 minutes for the edge cache and unlimited for the browser cache.
+   * Number in seconds to configure the edge and browser cache. The minimum is 1 minute. There's no maximum but keep in mind that browser and edge caches will do a best effort to respect this value.
    * Detailed documentation can be found here: https://vercel.com/docs/storage/vercel-blob#caching
-   * @defaultvalue 365 * 24 * 60 * 60 (1 Year)
+   * @defaultvalue 30 * 24 * 60 * 60 (1 Month)
    */
   cacheControlMaxAge?: number;
 }
