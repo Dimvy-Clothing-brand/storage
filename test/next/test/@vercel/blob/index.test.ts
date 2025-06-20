@@ -1,12 +1,14 @@
 import crypto from 'node:crypto';
+import _ from 'lodash';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { test, expect } from '@playwright/test';
 import type { PutBlobResult } from '@vercel/blob';
 import { getFilenameFromUrl } from '@/lib/utils';
 
-const prefix =
+const prefixRaw =
   process.env.GITHUB_PR_NUMBER || crypto.randomBytes(10).toString('hex');
+const prefix = _.escapeRegExp(prefixRaw);
 
 test.describe('@vercel/blob', () => {
   test.describe('api', () => {
